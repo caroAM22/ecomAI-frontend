@@ -49,7 +49,7 @@ const Footer = () => {
               <ul className="list-disc list-inside">
                 <li>
                   <a
-                    href="https://www.notion.so/Modelos-de-riesgo-de-cr-dito-con-RNA-175da9d4b08880aab37cf6943944b1f4"
+                    href="https://www.notion.so/Aplicaciones-de-Redes-Neuronales-Artificiales-196da9d4b08880cf9c2debad99ae75cf"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-indigo-300 hover:text-indigo-100"
