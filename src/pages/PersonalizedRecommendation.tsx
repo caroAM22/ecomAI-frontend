@@ -77,9 +77,6 @@ const ProductCard = ({
   product, 
   isSelected, 
   onClick,
-  similarProducts = [],
-  isLoadingSimilar = false,
-  onSimilarProductSelect
 }: ProductCardProps) => {
   return (
     <div className="flex flex-col gap-4">
