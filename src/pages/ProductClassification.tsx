@@ -3,7 +3,7 @@ import { useState } from "react";
 const ProductClassification = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-  const [classification, setClassification] = useState<string>("");
+  const [classification, setClassification] = useState<string | null>(null);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
@@ -23,17 +23,33 @@ const ProductClassification = () => {
     if (!selectedFile) return;
 
     const formData = new FormData();
-    formData.append("image", selectedFile);
+    formData.append("file", selectedFile);
 
     try {
-      const response = await fetch("/api/product-classification", {
+      const response = await fetch("https://predicciones-9fuy.onrender.com/predict_image", {
         method: "POST",
         body: formData,
       });
-      const data = await response.json();
-      setClassification(data.classification);
+
+      const textResponse = await response.text(); // Leer como texto
+      console.log("Texto de la respuesta:", textResponse);
+
+      try {
+        const data = JSON.parse(textResponse); // Intentar convertir a JSON
+        console.log("JSON parseado:", data);
+
+        if (data.predicted_class) {
+          setClassification(data.predicted_class);
+        } else {
+          setClassification("Respuesta inesperada: " + textResponse);
+        }
+      } catch (jsonError) {
+        console.error("Error parseando JSON:", jsonError);
+        setClassification("Error al interpretar la respuesta.");
+      }
     } catch (error) {
-      console.error("Error classifying product:", error);
+      console.error("Error clasificando producto:", error);
+      setClassification("Error en la clasificación.");
     }
   };
 
@@ -65,10 +81,10 @@ const ProductClassification = () => {
             Clasificar Producto
           </button>
         </form>
-        {classification && (
+        {classification !== null && (
           <div className="mt-4 text-center">
             <h2 className="text-xl font-semibold">Resultado de la clasificación:</h2>
-            <p className="text-lg">{classification}</p>
+            <p className="text-lg font-bold text-blue-600">{classification}</p>
           </div>
         )}
       </div>
@@ -77,3 +93,4 @@ const ProductClassification = () => {
 };
 
 export default ProductClassification;
+

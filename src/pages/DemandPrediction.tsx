@@ -168,7 +168,7 @@ const DemandPrediction: React.FC = () => {
     setMultipleDaysLoading(true)
     try {
       const daysToPredict = days || 1 // Si days es 0 o vacío, usamos 1 como valor por defecto
-      const response = await fetch("https://predicciones-9fuy.onrender.com/predict_days", {
+      const response = await fetch("https://predicciones-9fuy.onrender.com/predict_image", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

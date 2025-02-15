@@ -134,7 +134,7 @@ const PersonalizedRecommendation = () => {
     setLoading(true)
     setError("")
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/top-rated-products`)
+      const response = await fetch('https://amazon-recommendation-system-production.up.railway.app/top-rated-products')
       const data = await response.json()
       setTopRatedProducts(data)
     } catch (error) {
@@ -156,10 +156,10 @@ const PersonalizedRecommendation = () => {
     setError("")
     
     try {
-      const indexResponse = await fetch(`${import.meta.env.VITE_API_URL}/product-index/${product.name}`)
+      const indexResponse = await fetch(`https://amazon-recommendation-system-production.up.railway.app/top-rated-products/product-index/${product.name}`)
       const { index } = await indexResponse.json()
       
-      const recommendResponse = await fetch(`${import.meta.env.VITE_API_URL}/recommend/${index}`)
+      const recommendResponse = await fetch(`https://amazon-recommendation-system-production.up.railway.app/top-rated-products/product-index/recommend/${index}`)
       const recommendedProducts = await recommendResponse.json()
       
       setSimilarProducts(Array.isArray(recommendedProducts) ? recommendedProducts : [])
