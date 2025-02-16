@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom"
+
 const Footer = () => {
     return (
       <footer className="bg-gray-800 text-white py-6">
@@ -66,6 +68,11 @@ const Footer = () => {
                   >
                     Tutorial de uso de la aplicación
                   </a>
+                </li>
+                <li>
+                  <Link to="/privacy-policy" className="hover:text-gray-300">
+                    Política de Privacidad
+                  </Link>
                 </li>
               </ul>
             </div>
