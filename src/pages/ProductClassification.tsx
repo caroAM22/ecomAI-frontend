@@ -4,11 +4,13 @@ const ProductClassification = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [classification, setClassification] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false); // Estado de carga
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
       setSelectedFile(file);
+      setClassification(null); // Borra el resultado anterior
 
       const fileReader = new FileReader();
       fileReader.onloadend = () => {
@@ -22,6 +24,9 @@ const ProductClassification = () => {
     event.preventDefault();
     if (!selectedFile) return;
 
+    setLoading(true); // Activa la carga
+    setClassification(null); // Borra el resultado anterior
+
     const formData = new FormData();
     formData.append("file", selectedFile);
 
@@ -31,11 +36,11 @@ const ProductClassification = () => {
         body: formData,
       });
 
-      const textResponse = await response.text(); // Leer como texto
+      const textResponse = await response.text();
       console.log("Texto de la respuesta:", textResponse);
 
       try {
-        const data = JSON.parse(textResponse); // Intentar convertir a JSON
+        const data = JSON.parse(textResponse);
         console.log("JSON parseado:", data);
 
         if (data.predicted_class) {
@@ -50,6 +55,8 @@ const ProductClassification = () => {
     } catch (error) {
       console.error("Error clasificando producto:", error);
       setClassification("Error en la clasificación.");
+    } finally {
+      setLoading(false); // Desactiva la carga
     }
   };
 
@@ -77,11 +84,19 @@ const ProductClassification = () => {
           <button
             type="submit"
             className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-4 w-full"
+            disabled={loading} // Deshabilita el botón mientras carga
           >
-            Clasificar Producto
+            {loading ? "Clasificando..." : "Clasificar Producto"}
           </button>
         </form>
-        {classification !== null && (
+
+        {loading && (
+          <div className="mt-4 text-center">
+            <span className="text-lg font-semibold text-gray-600">Cargando...</span>
+          </div>
+        )}
+
+        {classification !== null && !loading && (
           <div className="mt-4 text-center">
             <h2 className="text-xl font-semibold">Resultado de la clasificación:</h2>
             <p className="text-lg font-bold text-blue-600">{classification}</p>
