@@ -1,50 +1,49 @@
-# React + TypeScript + Vite
+# Task 3: Aplication of ANN (Artificial Neural Networks)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This repository contains the code and additional files for the **Application of ANN** task. The goal of the project is to develop and deploy neural network models for demand prediction, product classification, and personalized recommendations.
 
-Currently, two official plugins are available:
+## Team Members
+- Carolina Álvarez Murillo: [caroAM22](https://github.com/caroAM22)
+- Alejandro Orozco Ochoa: [brokie636](https://github.com/brokie636)
+- Juan José Zapata Cadavid: [jzapataca](https://github.com/jzapataca)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Execution Instructions
 
-## Expanding the ESLint configuration
+1. Clone the repository:
+ ```bash
+ git clone https://github.com/your_username/credit-risk-project.git
+ ```
+   
+2. Navigate to the project folder:
+  ```bash
+  cd credit-risk-project
+  ```
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+3. Install dependencies:
+  ```bash
+  npm install
+  ```
 
-- Configure the top-level `parserOptions` property like this:
+4. Run the app:
+  ```bash
+  npm start
+  ```
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+This will launch the application on localhost.
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## Try it Online
+If you'd like to quickly try out the application, you can visit the deployed version on Vercel at:
+[ecom-ai-frontend.vercel.app](https://ecom-ai-frontend.vercel.app/)
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+## Dataset
+The datasets used for this project are:
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+Time Series for Demand Prediction:
+[Walmart Sales Forecast](https://www.kaggle.com/datasets/aslanahmedov/walmart-sales-forecast/data)
+
+Image Classification:
+[E-commerce Products Image Dataset](https://www.kaggle.com/datasets/sunnykusawa/ecommerce-products-image-dataset/data)
+
+Recommendation Systems:
+[Amazon Products Dataset](https://www.kaggle.com/datasets/lokeshparab/amazon-products-dataset/data)
+
