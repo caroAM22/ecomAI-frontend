@@ -61,7 +61,7 @@ const Footer = () => {
                 </li>
                 <li>
                   <a
-                    href="https://youtu.be/jYDtmZJIYuE"
+                    href="https://www.youtube.com/watch?v=bbKfWh_n2IA"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-indigo-300 hover:text-indigo-100"
