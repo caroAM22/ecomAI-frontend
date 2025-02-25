@@ -24,8 +24,8 @@ const ProductClassification = () => {
     event.preventDefault();
     if (!selectedFile) return;
 
-    setLoading(true); // Activa la carga
-    setClassification(null); // Borra el resultado anterior
+    setLoading(true); 
+    setClassification(null); 
 
     const formData = new FormData();
     formData.append("file", selectedFile);
@@ -56,7 +56,7 @@ const ProductClassification = () => {
       console.error("Error clasificando producto:", error);
       setClassification("Error en la clasificación.");
     } finally {
-      setLoading(false); // Desactiva la carga
+      setLoading(false);
     }
   };
 
@@ -84,7 +84,7 @@ const ProductClassification = () => {
           <button
             type="submit"
             className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-4 w-full"
-            disabled={loading} // Deshabilita el botón mientras carga
+            disabled={loading}
           >
             {loading ? "Clasificando..." : "Clasificar Producto"}
           </button>
