@@ -77,9 +77,6 @@ const ProductCard = ({
   product, 
   isSelected, 
   onClick,
-  similarProducts = [],
-  isLoadingSimilar = false,
-  onSimilarProductSelect
 }: ProductCardProps) => {
   return (
     <div className="flex flex-col gap-4">
@@ -134,7 +131,7 @@ const PersonalizedRecommendation = () => {
     setLoading(true)
     setError("")
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/top-rated-products`)
+      const response = await fetch('https://amazon-recommendation-system-production.up.railway.app/top-rated-products')
       const data = await response.json()
       setTopRatedProducts(data)
     } catch (error) {
@@ -156,10 +153,10 @@ const PersonalizedRecommendation = () => {
     setError("")
     
     try {
-      const indexResponse = await fetch(`${import.meta.env.VITE_API_URL}/product-index/${product.name}`)
+      const indexResponse = await fetch(`https://amazon-recommendation-system-production.up.railway.app/product-index/${product.name}`)
       const { index } = await indexResponse.json()
       
-      const recommendResponse = await fetch(`${import.meta.env.VITE_API_URL}/recommend/${index}?n=10`)
+      const recommendResponse = await fetch(`https://amazon-recommendation-system-production.up.railway.app/recommend/${index}?n=10`)
       const recommendedProducts = await recommendResponse.json()
       
       setSimilarProducts(Array.isArray(recommendedProducts) ? recommendedProducts : [])

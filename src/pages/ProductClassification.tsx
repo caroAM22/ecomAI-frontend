@@ -3,12 +3,14 @@ import { useState } from "react";
 const ProductClassification = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-  const [classification, setClassification] = useState<string>("");
+  const [classification, setClassification] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false); // Estado de carga
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
       setSelectedFile(file);
+      setClassification(null); // Borra el resultado anterior
 
       const fileReader = new FileReader();
       fileReader.onloadend = () => {
@@ -22,18 +24,39 @@ const ProductClassification = () => {
     event.preventDefault();
     if (!selectedFile) return;
 
+    setLoading(true); 
+    setClassification(null); 
+
     const formData = new FormData();
-    formData.append("image", selectedFile);
+    formData.append("file", selectedFile);
 
     try {
-      const response = await fetch("/api/product-classification", {
+      const response = await fetch("https://predicciones-9fuy.onrender.com/predict_image", {
         method: "POST",
         body: formData,
       });
-      const data = await response.json();
-      setClassification(data.classification);
+
+      const textResponse = await response.text();
+      console.log("Texto de la respuesta:", textResponse);
+
+      try {
+        const data = JSON.parse(textResponse);
+        console.log("JSON parseado:", data);
+
+        if (data.predicted_class) {
+          setClassification(data.predicted_class);
+        } else {
+          setClassification("Respuesta inesperada: " + textResponse);
+        }
+      } catch (jsonError) {
+        console.error("Error parseando JSON:", jsonError);
+        setClassification("Error al interpretar la respuesta.");
+      }
     } catch (error) {
-      console.error("Error classifying product:", error);
+      console.error("Error clasificando producto:", error);
+      setClassification("Error en la clasificación.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -61,14 +84,22 @@ const ProductClassification = () => {
           <button
             type="submit"
             className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-4 w-full"
+            disabled={loading}
           >
-            Clasificar Producto
+            {loading ? "Clasificando..." : "Clasificar Producto"}
           </button>
         </form>
-        {classification && (
+
+        {loading && (
+          <div className="mt-4 text-center">
+            <span className="text-lg font-semibold text-gray-600">Cargando...</span>
+          </div>
+        )}
+
+        {classification !== null && !loading && (
           <div className="mt-4 text-center">
             <h2 className="text-xl font-semibold">Resultado de la clasificación:</h2>
-            <p className="text-lg">{classification}</p>
+            <p className="text-lg font-bold text-blue-600">{classification}</p>
           </div>
         )}
       </div>
@@ -77,3 +108,4 @@ const ProductClassification = () => {
 };
 
 export default ProductClassification;
+

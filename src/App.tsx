@@ -4,6 +4,7 @@ import DemandPrediction from "./pages/DemandPrediction"
 import ProductClassification from "./pages/ProductClassification"
 import PersonalizedRecommendation from "./pages/PersonalizedRecommendation"
 import Footer from "./components/Footer"
+import PrivacyPolicy from "./pages/PrivacyPolicy"
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
             <Route path="/" element={<DemandPrediction />} />
             <Route path="/classification" element={<ProductClassification />} />
             <Route path="/recommendation" element={<PersonalizedRecommendation />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           </Routes>
         </main>
       </div>

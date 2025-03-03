@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom"
+
 const Footer = () => {
     return (
       <footer className="bg-gray-800 text-white py-6">
@@ -59,13 +61,18 @@ const Footer = () => {
                 </li>
                 <li>
                   <a
-                    href="https://youtu.be/jYDtmZJIYuE"
+                    href="https://www.youtube.com/watch?v=bbKfWh_n2IA"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-indigo-300 hover:text-indigo-100"
                   >
                     Tutorial de uso de la aplicación
                   </a>
+                </li>
+                <li>
+                  <Link to="/privacy-policy" className="hover:text-gray-300">
+                    Política de Privacidad
+                  </Link>
                 </li>
               </ul>
             </div>
