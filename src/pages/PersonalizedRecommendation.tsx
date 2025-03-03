@@ -159,7 +159,7 @@ const PersonalizedRecommendation = () => {
       const indexResponse = await fetch(`${import.meta.env.VITE_API_URL}/product-index/${product.name}`)
       const { index } = await indexResponse.json()
       
-      const recommendResponse = await fetch(`${import.meta.env.VITE_API_URL}/recommend/${index}`)
+      const recommendResponse = await fetch(`${import.meta.env.VITE_API_URL}/recommend/${index}?n=10`)
       const recommendedProducts = await recommendResponse.json()
       
       setSimilarProducts(Array.isArray(recommendedProducts) ? recommendedProducts : [])
@@ -277,8 +277,44 @@ const PersonalizedRecommendation = () => {
                   ))}
                 </div>
               ) : (
-                <div className="flex items-center justify-center h-32 text-gray-500">
-                  No se encontraron productos similares
+                <div>
+                  <h4 className="font-semibold mb-2">Top Productos Mejor Calificados</h4>
+                  <div className="grid gap-4">
+                  {topRatedProducts.slice(0, 5).map((product) => (
+                    <div
+                    key={product.index}
+                    onClick={() => handleProductSelect(product)}
+                    className="p-3 border rounded hover:border-purple-400 cursor-pointer transition-colors duration-200"
+                    >
+                    <div className="flex gap-3">
+                      <ProductImage 
+                      src={product.image}
+                      alt={product.name}
+                      className="w-24 h-24"
+                      />
+                      <div className="flex-1 min-w-0">
+                      <h4 className="font-medium text-sm mb-1 line-clamp-2">
+                        {product.name}
+                      </h4>
+                      <div className="flex items-center text-sm text-gray-600 mb-1">
+                        <span className="text-yellow-400 mr-1">★</span>
+                        {product.ratings} ({product.no_of_ratings})
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-base font-bold">
+                        {product.discount_price}
+                        </span>
+                        {product.actual_price && (
+                        <span className="text-sm text-gray-500 line-through">
+                          {product.actual_price}
+                        </span>
+                        )}
+                      </div>
+                      </div>
+                    </div>
+                    </div>
+                  ))}
+                  </div>
                 </div>
               )}
             </div>
